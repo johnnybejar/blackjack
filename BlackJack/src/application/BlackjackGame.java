@@ -1,12 +1,8 @@
-package application;
-
 import java.util.Scanner;
 
 public class BlackjackGame {
-
-    private Scanner input = new Scanner(System.in);
-    private int users;
-    private Player[] players;
+   
+    private Player player;
     private Deck deck;
     private Dealer dealer = new Dealer();
 
@@ -15,7 +11,7 @@ public class BlackjackGame {
         deck.shuffle();
     }
 
-    public void getBets() {
+    public void getBet() {
         int betValue;
 
         for (int i = 0; i < users; i++) {
@@ -47,11 +43,11 @@ public class BlackjackGame {
             System.out.println("Dealer has Blackjack!");
             for (int i = 0; i < users; i++) {
                 if (players[i].getTotal() == 21) {
-                    System.out.println(players[i].getName() + " pushes");
+                    System.out.println(player.getName() + " pushes");
                     players[i].push();
                 }
                 else {
-                    System.out.println(players[i].getName() + " loses");
+                    System.out.println(player.getName() + " loses");
                     players[i].bust();
                 }
             }
