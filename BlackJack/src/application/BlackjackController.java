@@ -6,9 +6,6 @@ import javafx.scene.control.Button;
 public class BlackjackController {
 
 	@FXML
-	Button shuffleButton;
-
-	@FXML
 	Button dealButton;
 	
 	@FXML
