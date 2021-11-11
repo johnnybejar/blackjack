@@ -1,13 +1,10 @@
-import java.util.Scanner;
-
 public class BlackjackGame {
    
     private Player player;
     private Deck deck;
     private Dealer dealer = new Dealer();
 
-    public void shuffle() throws InvalidDeckPositionException,
-            InvalidCardSuiteException, InvalidCardValueException {
+    public void shuffle() {
         deck.shuffle();
     }
 
@@ -15,13 +12,13 @@ public class BlackjackGame {
         int betValue;
 
         for (int i = 0; i < users; i++) {
-            if (player[i].getBank() > 0) {
+            if (player.getBank() > 0) {
                 do {
                     System.out.print("How much do you want to bet?");
                     betValue = input.nextInt();
-                    players[i].setBet(betValue);
+                    player.setBet(betValue);
                 }
-                while (!(betValue > 0 && betValue <= players[i].getBank()));
+                while (!(betValue > 0 && betValue <= player.getBank()));
                 System.out.println("");
             }
         }
@@ -30,8 +27,8 @@ public class BlackjackGame {
     public void dealCards() {
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < users; i++) {
-                if (players[i].getBank() > 0) {
-                    players[i].addCard(deck.nextCard());
+                if (player.getBank() > 0) {
+                    player.addCard(deck.nextCard());
                 }
             }
             dealer.addCard(deck.nextCard());
@@ -42,13 +39,13 @@ public class BlackjackGame {
         if (deal.isBlackjack()) {
             System.out.println("Dealer has Blackjack!");
             for (int i = 0; i < users; i++) {
-                if (players[i].getTotal() == 21) {
+                if (player.getTotal() == 21) {
                     System.out.println(player.getName() + " pushes");
-                    players[i].push();
+                    player.push();
                 }
                 else {
                     System.out.println(player.getName() + " loses");
-                    players[i].bust();
+                    player.bust();
                 }
             }
         }
@@ -58,9 +55,9 @@ public class BlackjackGame {
             }
 
             for (int i = 0; i < users; i++) {
-                if (players[i].getTotal() == 21) {
-                    System.out.println(players[i].getName() + " has blackjack!");
-                    players[i].blackjack();
+                if (player.getTotal() == 21) {
+                    System.out.println(player.getName() + " has blackjack!");
+                    player.blackjack();
                 }
             }
         }
@@ -69,7 +66,7 @@ public class BlackjackGame {
     public void dealerPlays() {
         boolean isPlayerInGame = false;
         for (int i = 0; i < users && isPlayerInGame == false; i++) {
-            if (players[i].getBet() > 0 && players[i].getTotal() <= 21) {
+            if (player.getBet() > 0 && player.getTotal() <= 21) {
                 isPlayerInGame = true;
             }
         }
@@ -78,5 +75,5 @@ public class BlackjackGame {
         }
     }
 
-
+   
 }
