@@ -35,11 +35,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="shuffleButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="44.0" style="-fx-background-color: #49A038;" text="Shuffle Deck" textFill="#f2ff00" underline="true">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
       <TextField fx:id="bankTotal" editable="false" focusTraversable="false" layoutX="850.0" layoutY="673.0" prefHeight="30.0" prefWidth="136.0" style="-fx-background-color: #49A038; -fx-text-fill: #F2FF00;" text="\$1000">
          <font>
             <Font name="System Bold" size="18.0" />
