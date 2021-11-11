@@ -1,3 +1,5 @@
+package application;
+
 public class Player {
 
 	private int cash;
