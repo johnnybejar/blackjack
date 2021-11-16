@@ -1,5 +1,11 @@
+package application;
+
+import application.Hand;
+import application.Card.RANKS;
+
 public class Hand {
-    private Card[] hand;
+	private Card[] hand = new Card[5];
+	private int cardTotal = 2;
 
     public Hand(DeckOfCards deck){
         hand[0] = deck.drawTop();
@@ -7,47 +13,71 @@ public class Hand {
     }
 
     public void Draw(DeckOfCards deck){
-        hand[hand.length] = deck.drawTop();
+    	if (cardTotal > 5) {
+    		System.out.println("Card total greater than 5! Winner!");
+    		return;
+    	}
+    	cardTotal += 1;
+        hand[cardTotal-1] = deck.drawTop();
     }
 
-    int getHandValue(){
-        int numAces = 0;
-        int totalValue = 0;
+    public int getHandValue(){
+    	int totalValue = 0;
+    	int totalAces = 0;
         for (Card c : hand){
-            if(c.getRank() == Card.RANKS.TWO)
-                totalValue += 2;
-            if(c.getRank() == Card.RANKS.THREE)
-                totalValue += 3;
-            if(c.getRank() == Card.RANKS.FOUR)
-                totalValue += 4;
-            if(c.getRank() == Card.RANKS.FIVE)
-                totalValue += 5;
-            if(c.getRank() == Card.RANKS.SIX)
-                totalValue += 6;
-            if(c.getRank() == Card.RANKS.SEVEN)
-                totalValue += 7;
-            if(c.getRank() == Card.RANKS.EIGHT)
-                totalValue += 8;
-            if(c.getRank() == Card.RANKS.NINE)
-                totalValue += 9;
-            if(c.getRank() == Card.RANKS.TEN)
-                totalValue += 10;
-            if(c.getRank() == Card.RANKS.JACK)
-                totalValue += 11;
-            if(c.getRank() == Card.RANKS.QUEEN)
-                totalValue += 12;
-            if(c.getRank() == Card.RANKS.KING)
-                totalValue += 13;
-            if(c.getRank() == Card.RANKS.ACE)
-                numAces += 1;
+        	if (c == null) {
+        		break;
+        	}
+        	
+        	if (c.getRank() == RANKS.ACE) {
+        		totalAces++;
+        		continue;
+        		
+        	} else {
+        		totalValue += c.getValue();
+        		
+        	}
+        	
         }
-        //Ace handling code
-        for (int i = numAces; i > 0; i--){
-            if(totalValue + 11 + numAces - 1 <= 21)
-                totalValue = totalValue + 11 + numAces - 1;
-            else
-                totalValue += numAces;
-        }
+        
+    	while (totalAces != 0) {
+    		if (totalValue + 11 > 21) {
+    			totalValue += 1;
+    			
+    		} else {
+    			totalValue += 11;
+    			
+    		}
+    		totalAces--;
+    	}
+        
         return totalValue;
+    }
+    
+    // This method is only used for the dealer's hand
+    // Figures out if the dealers hand is 17 or greater
+    public boolean dealerTotalCards(Hand dealerHand) {
+    	if (dealerHand.getHandValue() >= 17) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public Card[] getHand() {
+		return this.hand;
+	}
+    
+    public Card getCard(int index) {
+    	return this.hand[index];
+    }
+    
+    @Override
+    public String toString() {
+    	String handString = "";
+    	for (Card card : hand) {
+    		handString += card + ", ";
+    	}
+    	
+    	return handString;
     }
 }
