@@ -1,5 +1,4 @@
 package application;
-
 public class Player {
 
 	private int cash;
@@ -9,7 +8,10 @@ public class Player {
 	public Player(int cash, Hand hand) {
 		this.cash = cash;
 		this.hand = hand;
-		this.bet = 0;
+	}
+	
+	public Hand getHand() {
+		return hand;
 	}
 	
 	public int getCash() {
@@ -24,12 +26,8 @@ public class Player {
 		this.bet = bet;
 	}
 	
-	public Hand getHandClass() {
-		return this.hand;
-	}
-	
-	public Card[] getHand() {
-		return this.hand.getHand();
+	public int getBet() {
+		return bet;
 	}
 	
 	public void lose() {
@@ -40,11 +38,23 @@ public class Player {
 		this.cash += this.bet;
 	}
 	
-	public int getHandValue() {
-		return this.hand.getHandValue();
+	public int getPlayerTotal() {
+		return hand.getHandValue();
 	}
 	
 	public void hit(DeckOfCards deck) {
-		hand.Draw(deck.drawTop());
+		hand.Draw(deck);
+	}
+	
+	public boolean bust() {
+		if (getPlayerTotal() > 21) {
+			return true;
+		} else return false;
+	}
+	
+	public boolean blackjack() {
+		if (getPlayerTotal() == 21) {
+			return true;
+		} else return false;
 	}
 }
