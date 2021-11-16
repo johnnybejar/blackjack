@@ -1,52 +1,50 @@
 package application;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import application.Card.RANKS;
-import application.Card.SUITS;
-
+import java.util.Random;
 public class DeckOfCards {
-	private Card[] deck = new Card[52];
-	private int topCardIndex = 51;
-	
+
+    private Card[] deck;
+    private int cardIndex;
+
     public DeckOfCards(){
+        Card[] newCardDeck = new Card[52];
         int i = 0;
-        for (SUITS suit : SUITS.values()) {
-			for (RANKS rank : RANKS.values()) {
-				deck[i++] = new Card(suit, rank);
-			}
-		}
-        shuffleDeck();
+        for (Card.SUITS s : Card.SUITS.values()){
+            for (Card.RANKS r : Card.RANKS.values()){
+                Card newCard = new Card(s, r);
+                newCardDeck[i] = newCard;
+                i++;
+            }
+        }
+        deck = newCardDeck;
+        this.cardIndex = 0;
     }
 
-    public void shuffleDeck(){
-    	/*
-    	 * Shuffles the deck using the built-in Collections class
-    	 */
-    	Collections.shuffle(Arrays.asList(deck));
-    	
+    public void ShuffleDeck(){
+        int randInt;
+        Random rand = new Random();
+        Card temp;
+        for (int i = 0; i < 52; i++){
+            randInt = rand.nextInt(deck.length-1);
+            temp = deck[i];
+            deck[i] = deck[randInt];
+            deck[randInt] = temp;
+        }
     }
-    // Returns Card of the last element in deck and changes the element to null
+    //returns Card indicated by cardIndex then increments cardIndex
     public Card drawTop(){
-    	
-    	Card topCard = deck[topCardIndex];
-    	deck[topCardIndex] = null;
-    	
-    	topCardIndex -= 1;
-    	return topCard;
+        Card topCard = deck[cardIndex];
+        cardIndex += 1;
+        return topCard;
     }
     
-    public Card[] getDeck() {
-    	return this.deck;
-    }
-    
+  //for testing purposes inside ide
     @Override
     public String toString() {
-    	String deckString = "";
-    	for (Card cardTest : deck) {
-    		deckString += cardTest + ", ";
+    	String hold = "";
+    	for (int i = 0; i < deck.length; i++) {
+    		hold += (deck[i].toString() + "; ");
     	}
-    	return deckString;
+    	return hold;
     }
 }
