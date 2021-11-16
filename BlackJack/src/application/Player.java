@@ -1,7 +1,6 @@
 package application;
 
 public class Player {
-
 	private int cash;
 	private int bet;
 	private Hand hand;
@@ -19,8 +18,16 @@ public class Player {
 		this.cash = cash;
 	}
 	
+	public int getBet() {
+		return this.bet;
+	}
+	
 	public void setBet(int bet) {
 		this.bet = bet;
+	}
+	
+	public Hand getHand() {
+		return this.hand;
 	}
 	
 	public void lose() {
@@ -32,6 +39,6 @@ public class Player {
 	}
 	
 	public int getHandValue() {
-		return hand.getHandValue;
+		return hand.getHandValue();
 	}
 }
