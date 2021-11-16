@@ -37,7 +37,7 @@ public class Hand {
         	
         }
         
-    	for (int i = numAces; i > 0; i--){
+    	for (int i = totalAces; i > 0; i--){
             if(totalValue + (i*11) <= 21) {
                 totalValue = totalValue + (i*11);
                 break;
