@@ -1,6 +1,7 @@
 package application;
 
 public class Player {
+
 	private int cash;
 	private int bet;
 	private Hand hand;
@@ -8,6 +9,7 @@ public class Player {
 	public Player(int cash, Hand hand) {
 		this.cash = cash;
 		this.hand = hand;
+		this.bet = 0;
 	}
 	
 	public int getCash() {
@@ -18,16 +20,8 @@ public class Player {
 		this.cash = cash;
 	}
 	
-	public int getBet() {
-		return this.bet;
-	}
-	
 	public void setBet(int bet) {
 		this.bet = bet;
-	}
-	
-	public Card[] getHand() {
-		return this.hand.getHand();
 	}
 	
 	public void lose() {
@@ -39,6 +33,10 @@ public class Player {
 	}
 	
 	public int getHandValue() {
-		return hand.getHandValue();
+		return this.hand.getHandValue();
+	}
+	
+	public void hit(DeckOfCards deck) {
+		hand.Draw(deck.drawTop());
 	}
 }
