@@ -79,6 +79,10 @@ public class BlackjackController {
 	
 	public void initialize() {	
 		try {
+			/*
+			Initializes the GUI with the initial drawn cards by the player and the dealer
+			and updates the score
+			*/
 			playerCard1.setText(player.getHand()[0].toString());
 			playerCard2.setText(player.getHand()[1].toString());
 			
@@ -87,6 +91,7 @@ public class BlackjackController {
 			
 			playerTotal.setText(Integer.toString(player.getHandValue()));
 			dealerTotal.setText(Integer.toString(dealer.getHandValue()));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
