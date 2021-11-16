@@ -26,6 +26,14 @@ public class Player {
 		this.bet = bet;
 	}
 	
+	public Hand getHandClass() {
+		return this.hand;
+	}
+
+	public Card[] getHand() {
+		return this.hand.getHand();
+	}
+	
 	public int getBet() {
 		return bet;
 	}
