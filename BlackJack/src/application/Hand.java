@@ -40,27 +40,15 @@ public class Hand {
         	
         }
         
-    	while (totalAces != 0) {
-    		if (totalValue + 11 > 21) {
-    			totalValue += 1;
-    			
-    		} else {
-    			totalValue += 11;
-    			
-    		}
-    		totalAces--;
-    	}
-        
+    	for (int i = numAces; i > 0; i--){
+            if(totalValue + (i*11) <= 21) {
+                totalValue = totalValue + (i*11);
+                break;
+            }
+            else
+                totalValue += 1;
+	}
         return totalValue;
-    }
-    
-    // This method is only used for the dealer's hand
-    // Figures out if the dealers hand is 17 or greater
-    public boolean dealerTotalCards(Hand dealerHand) {
-    	if (dealerHand.getHandValue() >= 17) {
-    		return true;
-    	}
-    	return false;
     }
     
     public Card[] getHand() {
