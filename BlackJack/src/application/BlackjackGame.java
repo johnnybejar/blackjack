@@ -1,79 +1,90 @@
 public class BlackjackGame {
-   
+	
+    private DeckOfCards deck;
     private Player player;
-    private Deck deck;
-    private Dealer dealer = new Dealer();
-
-    public void shuffle() {
-        deck.shuffle();
+    private Dealer dealer;
+    private Hand playerHand;
+    private Hand dealerHand;
+    
+    public BlackjackGame(DeckOfCards deck, Player player, Dealer dealer) {
+    	this.deck = deck;
+    	this.player = player;
+    	this.dealer = dealer;
     }
-
-    public void getBet() {
-        int betValue;
-
-        for (int i = 0; i < users; i++) {
-            if (player.getBank() > 0) {
-                do {
-                    System.out.print("How much do you want to bet?");
-                    betValue = input.nextInt();
-                    player.setBet(betValue);
-                }
-                while (!(betValue > 0 && betValue <= player.getBank()));
-                System.out.println("");
-            }
-        }
-    }
-
-    public void dealCards() {
-        for (int j = 0; j < 2; j++) {
-            for (int i = 0; i < users; i++) {
-                if (player.getBank() > 0) {
-                    player.addCard(deck.nextCard());
-                }
-            }
-            dealer.addCard(deck.nextCard());
-        }
-    }
-
-    public void checkBlackjack() {
-        if (deal.isBlackjack()) {
-            System.out.println("Dealer has Blackjack!");
-            for (int i = 0; i < users; i++) {
-                if (player.getTotal() == 21) {
-                    System.out.println(player.getName() + " pushes");
-                    player.push();
-                }
-                else {
-                    System.out.println(player.getName() + " loses");
-                    player.bust();
-                }
-            }
-        }
-        else {
-            if (deal.peek()) {
-                System.out.println("Dealer peeks and does not have a Blackjack");
-            }
-
-            for (int i = 0; i < users; i++) {
-                if (player.getTotal() == 21) {
-                    System.out.println(player.getName() + " has blackjack!");
-                    player.blackjack();
-                }
-            }
-        }
-    }
-
-    public void dealerPlays() {
-        boolean isPlayerInGame = false;
-        for (int i = 0; i < users && isPlayerInGame == false; i++) {
-            if (player.getBet() > 0 && player.getTotal() <= 21) {
-                isPlayerInGame = true;
-            }
-        }
-        if (isPlayerInGame) {
-            dealer.dealerPlay(deck);
-        }
-    }
+    	public void newDeck(DeckOfCards newDeck) {
+    		this.deck = newDeck;
+    	}
+    	
+	    public void shuffle() {
+	        deck.ShuffleDeck();
+	    }
+	    
+	    public void deal() {
+	    	this.dealerHand = new Hand(deck);
+	        this.playerHand = new Hand(deck);
+	    }
+	    
+	    public void playerHit() {
+	    	this.playerHand.Draw(deck);
+	    }
+	    
+	    public void playerBet(int bet) {
+	    	player.setBet(bet);
+	    }
+	    
+	    public void doubleBet() {
+	    	int currentBet = player.getBet();
+	    	player.setBet(currentBet*2);
+	    }
+	    
+	    public void allIn() {
+	    	player.setBet(player.getCash());
+	    }
+	    
+	    public boolean checkPlayerBlackjack() {
+	        if (player.blackjack()) {
+	        	return true;
+	        }else return false;
+	    }
+	    
+	    public boolean checkDealerBlackjack() {
+	    	if(dealer.blackjack()) {
+	    		return true;
+	    	}else return false;
+	    }
+	    
+	    public boolean checkPlayerBust() {
+	    	if (player.bust()) {
+	    		return true;
+	    	}else return false;
+	    }
+	    
+	    public boolean checkDealerBust() {
+	    	if (dealer.bust()) {
+	    		return true;
+	    	}else return false;
+	    }
+	    //checks for win.  returns true if player, false if dealer
+	    public boolean checkWinner() {
+	    	if (checkPlayerBlackjack()) {
+	    		return true;
+	    	}
+	    	if(checkDealerBlackjack()) {
+	    		return false;
+	    	}
+	    	if (checkPlayerBust()) {
+	    		return false;
+	    	}
+	    	if (checkDealerBust()) {
+	    		return true;
+	    	}
+	    	if (playerHand.getHandValue() > dealerHand.getHandValue()) {
+	    		return true;
+	    	}
+	    	else return false;
+	    }
+	    
+}
 
    
 }
