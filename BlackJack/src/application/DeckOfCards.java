@@ -1,6 +1,10 @@
 package application;
 
-import java.util.Random;
+import java.util.Arrays;
+import java.util.Collections;
+import application.Card.RANKS;
+import application.Card.SUITS;
+
 public class DeckOfCards {
 
     private Card[] deck;
