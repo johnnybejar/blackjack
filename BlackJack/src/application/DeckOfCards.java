@@ -4,37 +4,33 @@ import java.util.Random;
 public class DeckOfCards {
 
     private Card[] deck;
-    private int cardIndex;
+    private int topCardIndex = 51;
 
     public DeckOfCards(){
         Card[] newCardDeck = new Card[52];
         int i = 0;
-        for (Card.SUITS s : Card.SUITS.values()){
-            for (Card.RANKS r : Card.RANKS.values()){
-                Card newCard = new Card(s, r);
-                newCardDeck[i] = newCard;
-                i++;
-            }
-        }
+        for (SUITS suit : SUITS.values()) {
+			for (RANKS rank : RANKS.values()) {
+				deck[i++] = new Card(suit, rank);
+			}
+		}
         deck = newCardDeck;
-        this.cardIndex = 0;
+        shuffleDeck();
     }
 
-    public void ShuffleDeck(){
-        int randInt;
-        Random rand = new Random();
-        Card temp;
-        for (int i = 0; i < 52; i++){
-            randInt = rand.nextInt(deck.length-1);
-            temp = deck[i];
-            deck[i] = deck[randInt];
-            deck[randInt] = temp;
-        }
+    public void shuffleDeck(){
+        /*
+    	 * Shuffles the deck using the built-in Collections class
+    	 */
+    	Collections.shuffle(Arrays.asList(deck));
     }
+    
     //returns Card indicated by cardIndex then increments cardIndex
     public Card drawTop(){
-        Card topCard = deck[cardIndex];
-        cardIndex += 1;
+        Card topCard = deck[topCardIndex];
+        deck[topCardIndex] = null;
+        
+        topCardIndex -= 1;
         return topCard;
     }
     
