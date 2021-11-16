@@ -15,6 +15,7 @@ public class DeckOfCards {
 			}
 		}
         deck = newCardDeck;
+	// Shuffles the newly created deck as the constructor creates it in order
         shuffleDeck();
     }
 
@@ -25,8 +26,11 @@ public class DeckOfCards {
     	Collections.shuffle(Arrays.asList(deck));
     }
     
-    //returns Card indicated by cardIndex then increments cardIndex
     public Card drawTop(){
+	/*
+	Grabs the card at the top of the deck or the last card in the array,
+	sets the index to null and returns the card
+	*/
         Card topCard = deck[topCardIndex];
         deck[topCardIndex] = null;
         
