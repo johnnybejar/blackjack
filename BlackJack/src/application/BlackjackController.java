@@ -19,9 +19,9 @@ public class BlackjackController {
 	
 	private boolean startGame = false;
     
-    private boolean continueGame = true;
+   	private boolean continueGame = true;
     
-    private boolean playerStand = false;
+   	private boolean playerStand = false;
 
 	@FXML
 	Button dealButton;
@@ -80,7 +80,7 @@ public class BlackjackController {
 	public void initialize() {	
 		try {
 			/*
-			Initializes the GUI with the initial drawn cards by the player and the dealer
+			Initializes the GUI with the initial drawn cards by the player and the dealer,
 			and updates the score
 			*/
 			playerCard1.setText(player.getHand()[0].toString());
@@ -115,6 +115,7 @@ public class BlackjackController {
 	}
 	
 	public void endGameButtonPressed(ActionEvent e) {
+		// Ends the game and closes the window
 		Platform.exit();
 	}
 	
@@ -157,6 +158,10 @@ public class BlackjackController {
 	}
 	
 	public void standButtonPressed(ActionEvent e) {
+		/*
+		If this button is pressed, the player cannot make anymore decisions until
+		the final result of the game is decided
+		*/
 		playerStand = true;
 	}
 	
