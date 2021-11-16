@@ -26,8 +26,8 @@ public class Player {
 		this.bet = bet;
 	}
 	
-	public Hand getHand() {
-		return this.hand;
+	public Card[] getHand() {
+		return this.hand.getHand();
 	}
 	
 	public void lose() {
