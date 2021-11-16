@@ -1,7 +1,6 @@
 package application;
 
 import application.Hand;
-import application.Card.RANKS;
 
 public class Hand {
 	private Card[] hand = new Card[5];
@@ -29,7 +28,7 @@ public class Hand {
         		break;
         	}
         	
-        	if (c.getRank() == RANKS.ACE) {
+        	if (c.getRank() == Card.RANKS.ACE) {
         		totalAces++;
         		continue;
         		
