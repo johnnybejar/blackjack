@@ -2,6 +2,9 @@ package application;
 
 public class Card {
     public enum SUITS{
+	/*
+	We assign string values and add a getter to SUITS for the toString method of Card
+	*/
         CLUBS("Clubs"),
         DIAMONDS("Diamonds"),
         HEARTS("Hearts"),
@@ -37,6 +40,9 @@ public class Card {
     private int value;
 
     public Card(SUITS suit, RANKS rank){
+	/*
+	Constructor for a single card
+	*/
         this.suit = suit;
         this.rank = rank;
         this.value = rank.value;
@@ -56,6 +62,9 @@ public class Card {
     
     @Override
     public String toString() {
+	/*
+	This method is used for output onto the GUI
+	*/
     	String s = String.format("%d of %s", this.rank.getValue(), this.suit.getSuitValue());
     	switch (this.getRank()) {
 			case ACE:
