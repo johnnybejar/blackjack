@@ -15,7 +15,7 @@ public class BlackjackController {
 	
 	Player dealer = new Player(500, new Hand(deck));
 	
-	private int playerBet = 50;
+	private int playerBet = 100;
 	
 	private boolean startGame = false;
     
@@ -121,7 +121,7 @@ public class BlackjackController {
 		try {
 			/*
 			 * We use var i and this while loop to determine where the
-			 * next 'null' is in the player's hand
+			 * next empty slot is in the player's hand
 			 */
 			int i = 0;
 			while (player.getHand()[i] != null) {
@@ -156,7 +156,7 @@ public class BlackjackController {
 	}
 	
 	public void doubleButtonPressed(ActionEvent e) {
-		
+		playerBet *= 2;
 	}
 	
 }
