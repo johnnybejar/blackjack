@@ -86,7 +86,7 @@ public class BlackjackController {
 		int i = 0;
 		try {
 			for (Label cardLabel : playerHand) {
-				cardLabel.setText(player.getHand().getHand()[i].toString());
+				cardLabel.setText(player.getHand()[0].toString());
 				i++;
 			}
 		} catch (NullPointerException e) {
@@ -101,7 +101,7 @@ public class BlackjackController {
 //					return;
 //				}
 				playerCard1.setVisible(true);
-				playerCard1.setText(player.getHand().getHand()[0].toString());
+				playerCard1.setText(player.getHand()[0].toString());
 			}
 		});
 		
