@@ -1,7 +1,5 @@
 package application;
 
-import application.Hand;
-
 public class Hand {
 	private Card[] hand = new Card[5];
 	private int cardTotal = 2;
