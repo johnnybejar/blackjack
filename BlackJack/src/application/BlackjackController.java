@@ -1,8 +1,6 @@
 package application;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,8 +14,14 @@ public class BlackjackController {
 	Player player = new Player(500, new Hand(deck));
 	
 	Player dealer = new Player(500, new Hand(deck));
+	
+	private int playerBet = 50;
+	
+	private boolean startGame = false;
     
     private boolean continueGame = true;
+    
+    private boolean playerStand = false;
 
 	@FXML
 	Button dealButton;
@@ -73,40 +77,24 @@ public class BlackjackController {
 	@FXML
 	Label dealerCard5;
 	
-	@FXML
-	Label[] playerHand = {playerCard1, playerCard2, playerCard3, playerCard4, playerCard5};
-	
-	@FXML
-	Label[] dealerHand = {dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5};
-	
-	public void initialize() {
-		System.out.println(player.getHand());
-		System.out.println(player.getHandValue());
-		
-		int i = 0;
+	public void initialize() {	
 		try {
-			for (Label cardLabel : playerHand) {
-				cardLabel.setText(player.getHand()[0].toString());
-				i++;
-			}
-		} catch (NullPointerException e) {
+			playerCard1.setText(player.getHand()[0].toString());
+			playerCard2.setText(player.getHand()[1].toString());
+			
+			dealerCard1.setText(dealer.getHand()[0].toString());
+			dealerCard2.setText(dealer.getHand()[1].toString());
+			
+			playerTotal.setText(Integer.toString(player.getHandValue()));
+			dealerTotal.setText(Integer.toString(dealer.getHandValue()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		playerCard1.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-//				if (player.getHandValue() == 0) {
-//					playerCard1.setVisible(false);
-//					return;
-//				}
-				playerCard1.setVisible(true);
-				playerCard1.setText(player.getHand()[0].toString());
-			}
-		});
-		
+			
 //		while (continueGame) {
-//			
+//			if (playerStand == false) {
+//				
+//			}
 //			
 //		}
 	}
@@ -125,19 +113,49 @@ public class BlackjackController {
 		Platform.exit();
 	}
 	
-	public void dealButtonPressed() {
-		
+	public void dealButtonPressed(ActionEvent e) {
+		startGame = true;
 	}
 	
-	public void hitButtonPressed() {
-		
+	public void hitButtonPressed(ActionEvent e) {
+		try {
+			/*
+			 * We use var i and this while loop to determine where the
+			 * next 'null' is in the player's hand
+			 */
+			int i = 0;
+			while (player.getHand()[i] != null) {
+				i++;
+				if (i == 5) {
+					return;
+				}
+			}
+			
+			player.getHandClass().Draw(deck);
+			switch(i) {
+				case 2:
+					playerCard3.setText(player.getHand()[2].toString());
+					break;
+				case 3:
+					playerCard4.setText(player.getHand()[3].toString());
+					break;
+				case 4:
+					playerCard5.setText(player.getHand()[4].toString());
+					break;
+				default:
+					break;
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
-	public void standButtonPressed() {
-		
+	public void standButtonPressed(ActionEvent e) {
+		playerStand = true;
 	}
 	
-	public void doubleButtonPressed() {
+	public void doubleButtonPressed(ActionEvent e) {
 		
 	}
 	
