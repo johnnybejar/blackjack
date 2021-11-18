@@ -1,6 +1,8 @@
 package application;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,19 +11,19 @@ import javafx.scene.control.TextField;
 
 public class BlackjackController {
 	
-	DeckOfCards deck = new DeckOfCards();
+	private Player player = new Player(1000);
 	
-	Player player = new Player(500, new Hand(deck));
+	private Dealer dealer = new Dealer();
 	
-	Player dealer = new Player(500, new Hand(deck));
+	private BlackjackGame game;
 	
-	private int playerBet = 100;
+	private int playerBet = 50;
 	
 	private boolean startGame = false;
     
-   	private boolean continueGame = true;
+    private boolean continueGame = true;
     
-   	private boolean playerStand = false;
+    private boolean playerStand = false;
 
 	@FXML
 	Button dealButton;
@@ -43,6 +45,15 @@ public class BlackjackController {
 
 	@FXML
 	TextField bankTotal;
+	
+	@FXML
+	Button addBet;
+	
+	@FXML
+	Button minusBet;
+	
+	@FXML
+	TextField betTotal;
 
 	@FXML
 	Button endGameButton;
@@ -77,31 +88,11 @@ public class BlackjackController {
 	@FXML
 	Label dealerCard5;
 	
-	public void initialize() {	
-		try {
-			/*
-			Initializes the GUI with the initial drawn cards by the player and the dealer,
-			and updates the score
-			*/
-			playerCard1.setText(player.getHand()[0].toString());
-			playerCard2.setText(player.getHand()[1].toString());
-			
-			dealerCard1.setText(dealer.getHand()[0].toString());
-			dealerCard2.setText(dealer.getHand()[1].toString());
-			
-			playerTotal.setText(Integer.toString(player.getHandValue()));
-			dealerTotal.setText(Integer.toString(dealer.getHandValue()));
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			
-//		while (continueGame) {
-//			if (playerStand == false) {
-//				
-//			}
-//			
-//		}
+	public void initialize() {
+		//disables all buttons but bet in order to force correct user inputs
+		hitButton.setDisable(true);
+		standButton.setDisable(true);
+		doubleButton.setDisable(true);
 	}
 	
 	public void findWinner() {
@@ -119,8 +110,37 @@ public class BlackjackController {
 		Platform.exit();
 	}
 	
+	//initializes a new deck, shuffles it, then deals to a player and dealer,
+	//then displays cards and total value
 	public void dealButtonPressed(ActionEvent e) {
-		startGame = true;
+		DeckOfCards deck = new DeckOfCards();
+		BlackjackGame game = new BlackjackGame(deck, player, dealer);
+		this.game = game;
+		game.shuffle();
+		game.deal();
+		try {
+			/*
+			Initializes the GUI with the initial drawn cards by the player and the dealer,
+			and updates the score
+			*/
+			playerCard1.setText(player.getHand()[0].toString());
+			playerCard2.setText(player.getHand()[1].toString());
+			
+			dealerCard1.setText(dealer.getHand()[0].toString());
+			dealerCard2.setText(dealer.getHand()[1].toString());
+			
+			playerTotal.setText(Integer.toString(player.getHandValue()));
+			dealerTotal.setText(Integer.toString(dealer.getHandValue()));
+			
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		dealButton.setDisable(true);
+		// addBet.setDisable(true);
+		// minusBet.setDisable(true);
+		hitButton.setDisable(false);
+		standButton.setDisable(false);
+		doubleButton.setDisable(false);
 	}
 	
 	public void hitButtonPressed(ActionEvent e) {
@@ -136,22 +156,30 @@ public class BlackjackController {
 					return;
 				}
 			}
+			game.playerHit();
 			
-			player.getHandClass().Draw(deck);
 			switch(i) {
 				case 2:
 					playerCard3.setText(player.getHand()[2].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
 					break;
 				case 3:
 					playerCard4.setText(player.getHand()[3].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
 					break;
 				case 4:
 					playerCard5.setText(player.getHand()[4].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
 					break;
 				default:
 					break;
 			}
-			
+			if (!game.checkPlayerBlackjack() && !game.checkPlayerBust() && !game.playerCount5()) {
+				return;
+			}else {
+				hitButton.setDisable(true);
+				
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -163,10 +191,14 @@ public class BlackjackController {
 		the final result of the game is decided
 		*/
 		playerStand = true;
+		hitButton.setDisable(true);
+		standButton.setDisable(true);
 	}
 	
 	public void doubleButtonPressed(ActionEvent e) {
-		playerBet *= 2;
+		int currentBet = player.getBet();
+    	player.setBet(currentBet*2);
+    	
 	}
 	
 }
