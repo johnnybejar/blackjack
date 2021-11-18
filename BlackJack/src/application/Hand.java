@@ -40,17 +40,14 @@ public class Hand {
         	
         }
         
-    	while (totalAces != 0) {
-    		if (totalValue + 11 > 21) {
-    			totalValue += 1;
-    			
-    		} else {
-    			totalValue += 11;
-    			
-    		}
-    		totalAces--;
-    	}
-        
+        for (int i = totalAces; i > 0; i--){
+            if(totalValue + (i*11) <= 21) {
+                totalValue = totalValue + (i*11);
+                break;
+            }
+            else
+                totalValue += 1;
+	}
         return totalValue;
     }
     
