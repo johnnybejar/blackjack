@@ -13,10 +13,6 @@ public class Hand {
     }
 
     public void Draw(DeckOfCards deck){
-    	if (cardTotal == 5) {
-    		System.out.println("Card total equals than 5! Winner!");
-    		return;
-    	}
     	cardTotal += 1;
         hand[cardTotal-1] = deck.drawTop();
     }
