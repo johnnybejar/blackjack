@@ -5,31 +5,43 @@ public class Dealer {
 	public Dealer() {
 	}
 	
-	public Hand getHand() {
+	/*
+	 * returns dealers hand as a hand object
+	 */
+	public Hand getHandClass() {
 		return this.hand;
 	}
-	
+	/*
+	 * returns dealers hand as an array of card objects
+	 */
+	public Card[] getHand() {
+		return this.hand.getHand();
+	}
+	/*
+	 * sets dealers hand
+	 */
 	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
-	
-	public int getDealerTotal() {
+	/*
+	 * returns the sum of values of cards in dealers hand
+	 */
+	public int getHandValue() {
 		return this.hand.getHandValue();
 	}
-	
-	public void dealerPlays(DeckOfCards deck) {
-		while (hand.getHandValue() < 17) {
-			hand.Draw(deck);
-		}
-	}
+	/*
+	 * returns true if dealer total above 21
+	 */
 	public boolean bust() {
-		if (this.getDealerTotal() > 21) {
+		if (this.getHandValue() > 21) {
 			return true;
 		} else return false;
 	}
-	
+	/*
+	 * returns true if dealer total equal to 21
+	 */
 	public boolean blackjack() {
-		if (this.getDealerTotal() == 21) {
+		if (this.getHandValue() == 21) {
 			return true;
 		} else return false;
 	}
