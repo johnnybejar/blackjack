@@ -1,5 +1,8 @@
 package application;
 
+import application.Hand;
+import application.Card.RANKS;
+
 public class Hand {
 	private Card[] hand = new Card[5];
 	private int cardTotal = 2;
@@ -10,12 +13,16 @@ public class Hand {
     }
 
     public void Draw(DeckOfCards deck){
-    	if (cardTotal > 5) {
-    		System.out.println("Card total greater than 5! Winner!");
+    	if (cardTotal == 5) {
+    		System.out.println("Card total equals than 5! Winner!");
     		return;
     	}
     	cardTotal += 1;
         hand[cardTotal-1] = deck.drawTop();
+    }
+    
+    public int getHandCount() {
+    	return cardTotal;
     }
 
     public int getHandValue(){
@@ -26,7 +33,7 @@ public class Hand {
         		break;
         	}
         	
-        	if (c.getRank() == Card.RANKS.ACE) {
+        	if (c.getRank() == RANKS.ACE) {
         		totalAces++;
         		continue;
         		
@@ -37,15 +44,27 @@ public class Hand {
         	
         }
         
-    	for (int i = totalAces; i > 0; i--){
-            if(totalValue + (i*11) <= 21) {
-                totalValue = totalValue + (i*11);
-                break;
-            }
-            else
-                totalValue += 1;
-	}
+    	while (totalAces != 0) {
+    		if (totalValue + 11 > 21) {
+    			totalValue += 1;
+    			
+    		} else {
+    			totalValue += 11;
+    			
+    		}
+    		totalAces--;
+    	}
+        
         return totalValue;
+    }
+    
+    // This method is only used for the dealer's hand
+    // Figures out if the dealers hand is 17 or greater
+    public boolean dealerTotalCards(Hand dealerHand) {
+    	if (dealerHand.getHandValue() >= 17) {
+    		return true;
+    	}
+    	return false;
     }
     
     public Card[] getHand() {
@@ -66,3 +85,4 @@ public class Hand {
     	return handString;
     }
 }
+
