@@ -1,41 +1,56 @@
 package application;
-public class Player {
 
+public class Player {
 	private int cash;
 	private int bet;
 	private Hand hand;
-	
-	public Player(int cash, Hand hand) {
+	/*
+	 * initializes player with given amount of money in the bank
+	 */
+	public Player(int cash) {
 		this.cash = cash;
+	}
+	/*
+	 * sets players hand
+	 */
+	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
-	
-	public Hand getHand() {
-		return hand;
-	}
-	
+	/*
+	 * returns amount of money in players bank
+	 */
 	public int getCash() {
 		return this.cash;
 	}
-	
+	/*
+	 * sets money in players bank
+	 */
 	public void setCash(int cash) {
 		this.cash = cash;
 	}
-	
+	/*
+	 * returns bet amount
+	 */
+	public int getBet() {
+		return this.bet;
+	}
+	/*
+	 * sets bet amount
+	 */
 	public void setBet(int bet) {
 		this.bet = bet;
 	}
-	
+	/*
+	 * returns players hand as a hand object
+	 */
 	public Hand getHandClass() {
 		return this.hand;
 	}
-
+	/*
+	 * returns players hand as an array of card objects
+	 */
 	public Card[] getHand() {
 		return this.hand.getHand();
-	}
-	
-	public int getBet() {
-		return bet;
 	}
 	
 	public void lose() {
@@ -46,22 +61,18 @@ public class Player {
 		this.cash += this.bet;
 	}
 	
-	public int getPlayerTotal() {
+	public int getHandValue() {
 		return hand.getHandValue();
 	}
-	
-	public void hit(DeckOfCards deck) {
-		hand.Draw(deck);
-	}
-	
-	public boolean bust() {
-		if (getPlayerTotal() > 21) {
+
+	public boolean blackjack() {
+		if (getHandValue() == 21) {
 			return true;
 		} else return false;
 	}
-	
-	public boolean blackjack() {
-		if (getPlayerTotal() == 21) {
+
+	public boolean bust() {
+		if (getHandValue() > 21) {
 			return true;
 		} else return false;
 	}
