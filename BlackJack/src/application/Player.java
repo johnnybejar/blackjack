@@ -2,7 +2,6 @@ package application;
 
 public class Player {
 	private int cash;
-	private int bet;
 	private Hand hand;
 	/*
 	 * initializes player with given amount of money in the bank
@@ -29,18 +28,6 @@ public class Player {
 		this.cash = cash;
 	}
 	/*
-	 * returns bet amount
-	 */
-	public int getBet() {
-		return this.bet;
-	}
-	/*
-	 * sets bet amount
-	 */
-	public void setBet(int bet) {
-		this.bet = bet;
-	}
-	/*
 	 * returns players hand as a hand object
 	 */
 	public Hand getHandClass() {
@@ -53,12 +40,12 @@ public class Player {
 		return this.hand.getHand();
 	}
 	
-	public void lose() {
-		this.cash -= this.bet;
+	public void removeCash(int bet) {
+		this.cash = this.cash - bet;
 	}
 	
-	public void win() {
-		this.cash += this.bet;
+	public void addCash(int bet) {
+		this.cash = this.cash + bet;
 	}
 	
 	public int getHandValue() {
@@ -77,3 +64,4 @@ public class Player {
 		} else return false;
 	}
 }
+
