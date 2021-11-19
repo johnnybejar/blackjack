@@ -129,7 +129,7 @@ public class BlackjackController {
 		minusBet.setDisable(true);
 		dealButton.setDisable(false);
 		addBet.setDisable(false);
-		minusBet.setDisable(false);
+		minusBet.setDisable(true);
 		playerBet = 50;
 		betTotal.setText("50");
 	}
