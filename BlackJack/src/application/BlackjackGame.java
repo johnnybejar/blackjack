@@ -34,7 +34,7 @@ public class BlackjackGame {
      * plays the dealer using the dealerPlays method from the dealer class
      */
     public void dealerPlays() {
-		while (dealerHand.getHandValue() < 17) {
+		while (dealerHand.getHandValue() < 17 && !dealerCount5()) {
 			dealerHand.Draw(deck);
 		}
 	}
