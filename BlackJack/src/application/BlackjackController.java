@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Arrays;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -91,6 +93,7 @@ public class BlackjackController {
 		minusBet.setDisable(true);
 	}
 	public void peekDealer() {
+		// Shows the dealer's first card after the player is done with their turn
 		dealerCard1.setText(dealer.getHand()[0].toString());
 		dealerTotal.setText(Integer.toString(dealer.getHandValue()));
 	}
@@ -123,6 +126,10 @@ public class BlackjackController {
 	}
 
 	public void resetDefaults() {
+		/*
+		 * Resets the game after it is finished to allow 
+		 * a new one to begin
+		 */
 		hitButton.setDisable(true);
 		standButton.setDisable(true);
 		doubleButton.setDisable(true);
@@ -136,11 +143,15 @@ public class BlackjackController {
 	
 	
 	public void findWinner() {
-		if (player.getHandValue() > dealer.getHandValue()) {
+		/*
+		 * Finds the winner either through having a greater hand or
+		 * by having a 5 card win
+		 */
+		if (player.getHandValue() > dealer.getHandValue() || (!Arrays.asList(player.getHand()).contains(null) && player.getHandValue() <= 21)) {
 
 			playerWins();
 			
-		} else if (player.getHandValue() < dealer.getHandValue()) {
+		} else if (player.getHandValue() < dealer.getHandValue() || (!Arrays.asList(dealer.getHand()).contains(null) && dealer.getHandValue() <= 21)) {
 			
 			playerLoses();
 			
@@ -155,8 +166,8 @@ public class BlackjackController {
 		Platform.exit();
 	}
 	
-	//first clears all text from previous hand, then initializes a new deck, shuffles it, then deals to a player and dealer,
-	//then displays cards and total value
+	// First clears all text from previous hand, then initializes a new deck, shuffles it, then deals to a player and dealer,
+	// then displays cards and total value
 	public void dealButtonPressed(ActionEvent e) {
 
 		playerCard1.setText("");
@@ -198,6 +209,8 @@ public class BlackjackController {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		
+		// Enables controls that allow the player to play
 		dealButton.setDisable(true);
 		addBet.setDisable(true);
 		minusBet.setDisable(true);
@@ -220,6 +233,7 @@ public class BlackjackController {
 				}
 			}
 			game.playerHit();
+			doubleButton.setDisable(true);
 			
 			switch(i) {
 				case 2:
@@ -301,11 +315,67 @@ public class BlackjackController {
 	}
 	
 	public void doubleButtonPressed(ActionEvent e) {
+		/*
+		 * If pressed, the bet is doubled and a card is drawn
+		 * Afterwards, the button is disabled
+		 */
     	if (playerBet*2 <= player.getCash()) {
     		playerBet *= 2;
 			betTotal.setText(Integer.toString(playerBet));
 			doubleButton.setDisable(true);
-    	}else doubleButton.setDisable(true);
+    	}else { 
+    		doubleButton.setDisable(true);
+    	}
+    	
+    	try {
+			/*
+			 * We use var i and this while loop to determine where the
+			 * next empty slot is in the player's hand
+			 */
+			int i = 0;
+			while (player.getHand()[i] != null) {
+				i++;
+				if (i == 5) {
+					return;
+				}
+			}
+			game.playerHit();
+			doubleButton.setDisable(true);
+			
+			// "Places" the card in the next available slot
+			switch(i) {
+				case 2:
+					playerCard3.setText(player.getHand()[2].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
+					break;
+				case 3:
+					playerCard4.setText(player.getHand()[3].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
+					break;
+				case 4:
+					playerCard5.setText(player.getHand()[4].toString());
+					playerTotal.setText(Integer.toString(player.getHandValue()));
+					break;
+				default:
+					break;
+			}
+			if (!game.checkPlayerBlackjack() && !game.checkPlayerBust() && !game.playerCount5()) {
+				return;
+			}else {
+				hitButton.setDisable(true);
+				if (game.checkPlayerBlackjack() || game.playerCount5()) {
+					playerWins();
+				}
+				
+				if (game.checkPlayerBust()) {
+					playerLoses();	
+				}
+				
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void addButtonPressed(ActionEvent e) {
