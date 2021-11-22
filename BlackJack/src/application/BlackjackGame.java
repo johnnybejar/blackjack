@@ -92,7 +92,7 @@ public class BlackjackGame {
      * returns true if player hand count reaches 5 or more
      */
     public boolean playerCount5() {
-    	if (getHandCountP() >= 5) {
+    	if (getHandCountP() >= 5 && player.getHandValue() <= 21) {
     		return true;
     	}else return false;
     }
@@ -100,7 +100,7 @@ public class BlackjackGame {
      * returns true if dealer hand count reaches 5 or more
      */
     public boolean dealerCount5() {
-    	if (getHandCountD() >= 5) {
+    	if (getHandCountD() > 5 && player.getHandValue() <= 21) {
     		return true;
     	}else return false;
     }
